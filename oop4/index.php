@@ -3,11 +3,11 @@
 include_once('init.php');
 
 const BASE_URL = '/oop4/';
-$router = new Router(BASE_URL);
+$router = new routers\Router(BASE_URL);
 
-$router->addRoute('', 'ArticlesController');
-$router->addRoute('article/1', 'ArticlesController', 'item');
-$router->addRoute('article/2', 'ArticlesController', 'item'); // e t.c post/99, post/100 lol :))
+$router->addRoute('', 'Controller\Articles');
+$router->addRoute('article/1', 'Controller\Articles', 'item');
+$router->addRoute('article/2', 'Controller\Articles', 'item'); // e t.c post/99, post/100 lol :))
 
 $uri = $_SERVER['REQUEST_URI'];
 $activeRoute = $router->resolvePath($uri);

@@ -1,4 +1,5 @@
 <?php
+namespace routers;
 
 class Router{
 	protected string $baseUrl;
@@ -24,7 +25,7 @@ class Router{
 		$params = explode('/', $relativeUrl);
 		$controller = new $route['c']();
 		$controller->setEnviroment($params);
-		// var_dump($controller instanceof IController); // hmmmm
+		// var_dump($controller instanceof IController);
 
 		return [
 			'controller' => $controller,

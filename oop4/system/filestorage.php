@@ -1,6 +1,8 @@
 <?php
+namespace storage;
+use storage\IStorage;
 
-class FileStorage implements IStorage{
+class File implements IStorage{
 	protected array $records = [];
 	protected int $ai = 0;
 	protected string $dbPath;
