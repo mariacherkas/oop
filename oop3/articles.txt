@@ -1,0 +1,1 @@
+{"records":{"1":{"title":"New art","content":"Content new art"}},"ai":1}

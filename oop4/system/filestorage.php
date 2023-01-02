@@ -4,34 +4,29 @@ class FileStorage implements IStorage{
 	protected array $records = [];
 	protected int $ai = 0;
 	protected string $dbPath;
-    private static array $instances = [];
+	protected static array $instances = [];
 
-	private function __construct(){
+	public static function getInstance($dbPath) : self{
+		if(!isset(self::$instances[$dbPath])){
+			self::$instances[$dbPath] = new self($dbPath);
+		}
 
+		return self::$instances[$dbPath];
 	}
 
-    public static function getInstance(string $dbPath): FileStorage
-    {
-        $cls = static::class;
-        if (!isset(self::$instances[$cls])) {
-            self::$instances[$cls] = new static();
-        }
+	protected function __construct(string $dbPath){
+		$this->dbPath = $dbPath;
 
-        self::$instances[$cls]->dbPath = $dbPath;
-
-        if(file_exists(self::$instances[$cls]->dbPath)){
-            $data = json_decode(file_get_contents(self::$instances[$cls]->dbPath), true);
-
-            self::$instances[$cls]->records = $data['records'];
-            self::$instances[$cls]->ai = $data['ai'];
-        }
-
-        return self::$instances[$cls];
-    }
+		if(file_exists($this->dbPath)){
+			$data = json_decode(file_get_contents($this->dbPath), true);
+			$this->records = $data['records'];
+			$this->ai = $data['ai'];
+		}
+	}
 
 	public function create(array $fields) : int{
 		$id = ++$this->ai;
-        $this->records[$id] = $fields;
+		$this->records[$id] = $fields;
 		$this->save();
 		return $id;
 	}
@@ -64,6 +59,6 @@ class FileStorage implements IStorage{
 		file_put_contents($this->dbPath, json_encode([
 			'records' => $this->records,
 			'ai' => $this->ai
-		]),FILE_USE_INCLUDE_PATH);
+		]));
 	}
 }

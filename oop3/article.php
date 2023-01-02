@@ -10,8 +10,8 @@ class Article{
 		$this->storage = $storage;
 	}
 
-	public function create(){
-		$this->id = $this->storage->create();
+	public function create(array $fields){
+		$this->id = $this->storage->create($fields);
 	}
 
     /**
