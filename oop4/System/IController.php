@@ -1,5 +1,5 @@
 <?php
-namespace Controller;
+namespace System;
 
 interface IController{
 	public function setEnviroment(array $urlParams) : void;

@@ -1,5 +1,7 @@
 <?php
-namespace routers;
+namespace System;
+use Articles\Controller;
+use System\Exceptions\Exc404;
 
 class Router{
 	protected string $baseUrl;
@@ -33,7 +35,10 @@ class Router{
 		];
 	}
 
-	protected function findPath(string $url) : ?array{
+    /**
+     * @throws Exc404
+     */
+    protected function findPath(string $url) : ?array{
 		$activeRoute = null;
 
 		foreach($this->routes as $route){
@@ -41,6 +46,10 @@ class Router{
 				$activeRoute = $route;
 			}
 		}
+
+        if ($activeRoute == null){
+            throw new Exc404('route not found');
+        }
 
 		return $activeRoute;
 	}

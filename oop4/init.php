@@ -1,8 +1,9 @@
 <?php
 
-include_once('system/icontroller.php');
-include_once('system/router.php');
-include_once('system/istorage.php');
-include_once('system/filestorage.php');
+spl_autoload_register(function($name){
+    $path = str_replace('\\', '/', $name) . '.php';
 
-include_once('articles/controller.php');
+    if(file_exists($path)){
+        include_once $path;
+    }
+});

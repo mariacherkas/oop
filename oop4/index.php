@@ -1,23 +1,37 @@
 <?php
 
 include_once('init.php');
-
+use System\Router;
+use System\Exceptions\Exc404;
+use Articles\Controller;
 const BASE_URL = '/oop4/';
-$router = new routers\Router(BASE_URL);
 
-$router->addRoute('', 'Controller\Articles');
-$router->addRoute('article/1', 'Controller\Articles', 'item');
-$router->addRoute('article/2', 'Controller\Articles', 'item'); // e t.c post/99, post/100 lol :))
+/** @var TYPE_NAME $exception */
+try {
+    $router = new Router(BASE_URL);
 
-$uri = $_SERVER['REQUEST_URI'];
-$activeRoute = $router->resolvePath($uri);
+    $router->addRoute('', Articles\Controller::class);
+    $router->addRoute('article/1', Articles\Controller::class, 'item');
+    $router->addRoute('article/2', Articles\Controller::class, 'item'); // e t.c post/99, post/100 lol :))
 
-$c = $activeRoute['controller'];
-$m = $activeRoute['method'];
+    $uri = $_SERVER['REQUEST_URI'];
 
-$c->$m();
-$html = $c->render();
-echo $html;
+    $activeRoute = $router->resolvePath($uri);
+
+    $c = $activeRoute['controller'];
+    $m = $activeRoute['method'];
+
+    $c->$m();
+    $html = $c->render();
+    echo $html;
+}
+catch (Exc404 $exception){
+    echo '404' . $exception->getMessage();
+}
+catch (Throwable $exception){
+    echo 'nice show error:' . $exception->getMessage();
+}
+
 ?>
 <hr>
 Menu

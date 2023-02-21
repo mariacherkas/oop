@@ -1,5 +1,5 @@
 <?php
-namespace storage;
+namespace System;
 
 interface IStorage{
 

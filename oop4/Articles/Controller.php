@@ -1,17 +1,17 @@
 <?php
-namespace Controller;
-use Controller\IController;
-use storage\File;
-use storage\IStorage;
+namespace Articles;
+use System\FileStorage;
+use System\IController;
+use System\IStorage;
 
-class Articles implements IController{
+class Controller implements IController{
 	protected string $title = '';
 	protected string $content = '';
 	protected array $env;
 	protected IStorage $storage;
 
 	public function __construct(){
-		$this->storage = File::getInstance('db/articles.txt'); // yes-yes, without DI it is trash
+		$this->storage = FileStorage::getInstance('db/Articles.txt'); // yes-yes, without DI it is trash
 	}
 
 	public function setEnviroment(array $urlParams) : void{
